@@ -9,6 +9,18 @@ A modern, serverless SQL Editor built with Next.js, Tailwind CSS, and Gemini AI.
 - 📊 **Data Visualization**: View results in a clean, responsive table.
 - 🔌 **Universal Connection**: Connect to any accessible MySQL database.
 
+## 🎮 Try the Demo
+
+Want to test it out? Use these **Guest Credentials** to connect immediately:
+
+| Field | Value |
+| :--- | :--- |
+| **Host** | `gateway01.ap-northeast-1.prod.aws.tidbcloud.com` |
+| **Port** | `4000` |
+| **User** | `ABuAHqwviSXGzDa.guest` |
+| **Password** | `guest123` |
+| **Database** | `demo` |
+
 ## Getting Started
 
 ### Prerequisites

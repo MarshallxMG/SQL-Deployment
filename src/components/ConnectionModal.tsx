@@ -65,7 +65,7 @@ export default function ConnectionModal({ isOpen, onClose, onConnect }: Connecti
   const getCleanConfig = () => {
     return {
       ...config,
-      host: config.host.replace(/^https?:\/\//, '')
+      host: config.host.replace(/^https?:\/\//, '').replace(/\/$/, '')
     };
   };
 
