@@ -1,17 +1,14 @@
 # SQL Editor Web App
 
-A modern, serverless SQL Editor built with Next.js, Tailwind CSS, and Gemini AI. Ported from [MarshallxMG/SQL-Editor](https://github.com/MarshallxMG/SQL-Editor).
+A modern, serverless SQL Editor built with Next.js, Tailwind CSS, and Gemini AI.
 
-## Features
-- 🚀 **Serverless Architecture**: Built on Next.js App Router.
-- 💅 **Modern UI**: Styled with Tailwind CSS and Lucide icons.
-- 🤖 **AI-Powered**: Generate SQL queries from natural language using Google Gemini.
-- 📊 **Data Visualization**: View results in a clean, responsive table.
-- 🔌 **Universal Connection**: Connect to any accessible MySQL database.
+## 🎮 Try it Live
 
-## 🎮 Try the Demo
+**[Open the App](https://sql-deployment-zeta.vercel.app/)**
 
-Want to test it out? Use these **Guest Credentials** to connect immediately:
+### 🔑 Guest Credentials
+Want to create your own tables and explore? Use these credentials to access the **Demo Database**.
+You have **FULL ACCESS** to this database (Create, Read, Update, Delete).
 
 | Field | Value |
 | :--- | :--- |
@@ -19,40 +16,25 @@ Want to test it out? Use these **Guest Credentials** to connect immediately:
 | **Port** | `4000` |
 | **User** | `ABuAHqwviSXGzDa.guest` |
 | **Password** | `guest123` |
-| **Database** | `demo` |
+| **Database** | `demo1` |
 
-## Getting Started
+> **Note:** This is a shared demo environment. You can create tables and insert data freely in the `demo1` database!
 
-### Prerequisites
-- Node.js 18+
-- A MySQL database
-- Google Gemini API Key
+## ✨ Features
+- 🚀 **Serverless Architecture**: Fast and lightweight.
+- 💅 **Modern UI**: Beautiful dark mode with Tailwind CSS.
+- 🤖 **AI-Powered**: Ask questions in plain English to generate SQL.
+- 📊 **Data Visualization**: Automatically graph your query results.
+- 🔌 **Universal Connection**: Connect to your own TiDB, MySQL, or AWS database.
 
-### Installation
+📖 **[Read Full Documentation](PROJECT_DOCS.md)**
 
-1.  Install dependencies:
-    ```bash
-    npm install
-    ```
+---
 
-2.  Create `.env.local`:
-    ```bash
-    GEMINI_API_KEY=your_api_key
-    ```
+### 🛠️ For Developers
+If you want to run this project locally:
 
-3.  Run locally:
-    ```bash
-    npm run dev
-    ```
-
-## Deployment
-
-Deploy easily on [Vercel](https://vercel.com):
-
-1.  Push to GitHub.
-2.  Import into Vercel.
-3.  Add `GEMINI_API_KEY` to Environment Variables.
-4.  Deploy.
-
-## License
-MIT
+1.  **Clone the repo**
+2.  **Install dependencies**: `npm install`
+3.  **Set up Environment**: Create `.env.local` with `GEMINI_API_KEY`
+4.  **Run**: `npm run dev`
