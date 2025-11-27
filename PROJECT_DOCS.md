@@ -1,109 +1,136 @@
-# SQL Editor Project Documentation
+# 📘 SQL Editor - The Ultimate Guide
 
-## 1. Project Overview
-This project is a modern, serverless SQL Editor built with **Next.js 14 (App Router)**. It allows users to connect to any MySQL-compatible database (TiDB, AWS RDS, PlanetScale, etc.), run queries, visualize results, and use AI to generate SQL.
+Welcome to the **SQL Editor**! This document is designed to help you understand exactly what this tool is, how to use it, and how it works under the hood.
 
-## 2. Architecture & Tech Stack
-- **Framework**: Next.js 14 (React, TypeScript)
-- **Styling**: Tailwind CSS
-- **Database Client**: `mysql2` (Promise-based)
-- **AI Integration**: Google Gemini API (`@google/generative-ai`)
-- **Icons**: Lucide React
-- **Deployment**: Vercel (Serverless Functions)
+---
 
-## 3. Directory Structure
+## 🌟 Part 1: User Guide (For Everyone)
+
+### 1. What is this tool?
+Think of this application as a **"Web Browser for your Database"**.
+Just like Chrome lets you browse the internet, this SQL Editor lets you browse, search, and modify your database.
+
+**Key Features:**
+*   **Connect Anywhere:** Works with MySQL, TiDB, AWS RDS, PlanetScale, and more.
+*   **AI Assistant:** Don't know SQL? Just ask plain English questions like *"Show me the newest users"*.
+*   **Visual Builder:** Drag and drop to build queries without writing code.
+*   **Charts:** Instantly turn your data into Bar, Line, or Pie charts.
+
+### 2. How to Connect
+When you first open the app, you will see a **Connection Screen**. You need "Keys" to enter the "House" (Database).
+
+#### Option A: Use the Demo (Try it out!)
+If you just want to play around, use these credentials:
+*   **Host:** `gateway01.ap-northeast-1.prod.aws.tidbcloud.com`
+*   **Port:** `4000`
+*   **User:** `ABuAHqwviSXGzDa.guest`
+*   **Password:** `guest123`
+*   **Database:** `demo1`
+
+#### Option B: Connect Your Own Database
+If you have your own database (e.g., from TiDB Cloud or AWS), enter your own details:
+*   **Host:** The address of your server (e.g., `xxx.tidbcloud.com`).
+*   **User/Password:** Your personal login.
+*   **Database:** The specific database you want to open.
+
+### 3. The Interface Explained
+
+#### 🏠 The Sidebar (Left)
+*   **SQL Editor:** The main screen where you write code.
+*   **Data:** Browse your tables and see raw data.
+*   **History:** See queries you ran in the past.
+*   **Saved Queries:** Your favorite snippets.
+
+#### 📝 The Editor (Center)
+*   **Code Box:** Type your SQL here (e.g., `SELECT * FROM users`).
+*   **Run Button (▶):** Executes the code.
+*   **Explain Button:** Uses AI to explain what your complex query does.
+
+#### 🤖 AI Chat (Right Sidebar)
+*   Click the **"Ask AI"** button.
+*   Type a question: *"Who spent the most money in 2024?"*
+*   The AI will write the SQL code for you! Click "Insert" to put it in the editor.
+
+#### 📊 Visual Builder (Tab)
+*   Don't like code? Click the **"Visual Builder"** tab.
+*   Select a **Table** from the dropdown.
+*   Select **Columns** you want to see.
+*   Add **Filters** (e.g., `Age > 18`).
+*   It builds the query for you automatically!
+
+### 4. Common Tasks
+
+**How to create a new table?**
+1.  Type this in the editor:
+    ```sql
+    CREATE TABLE my_table (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255)
+    );
+    ```
+2.  Click **Run**.
+
+**How to import data?**
+1.  Click the **Import Icon** (📁) in the toolbar.
+2.  Select a `.sql` file from your computer.
+3.  The app will run all the commands in that file.
+
+**How to export data?**
+1.  Run a query to get results.
+2.  Click the **Download CSV** or **Download JSON** buttons above the result table.
+
+---
+
+## 🛠️ Part 2: Developer Guide (For Coders)
+
+### 1. Architecture
+This project uses a **Serverless Architecture** powered by Next.js.
+*   **Frontend:** React, Tailwind CSS, Lucide Icons.
+*   **Backend:** Next.js API Routes (Serverless Functions).
+*   **Database Client:** `mysql2` library (Connection pooling not used due to serverless nature).
+*   **AI:** Google Gemini API.
+
+### 2. Project Structure
 ```
 src/
-├── app/                 # Next.js App Router pages and API routes
-│   ├── api/             # Backend API endpoints
-│   │   ├── ai/          # AI SQL generation
-│   │   ├── connect/     # Database connection testing
-│   │   ├── import/      # SQL file import
-│   │   ├── query/       # SQL query execution
-│   │   └── schema/      # Database schema fetching
-│   ├── layout.tsx       # Main app layout (providers, global styles)
-│   └── page.tsx         # Main dashboard page
-├── components/          # React UI components
-│   ├── ChatSidebar.tsx  # AI Chat interface
-│   ├── ConnectionModal.tsx # Database connection form
-│   ├── DataVisualizer.tsx # Charts and graphs
-│   ├── ResultTable.tsx  # Query results table
-│   ├── SQLEditor.tsx    # Monaco-based SQL code editor
-│   └── VisualQueryBuilder.tsx # Drag-and-drop query builder
-├── hooks/               # Custom React hooks
-│   └── useSqlExecutor.ts # Logic for running queries
-└── lib/                 # Utility functions
-    └── utils.ts         # Helper functions (class names, etc.)
+├── app/                 # Next.js App Router
+│   ├── api/             # Backend Endpoints
+│   │   ├── connect/     # Validates connection details
+│   │   ├── query/       # Executes SQL (The engine)
+│   │   ├── ai/          # Generates SQL from text
+│   │   └── import/      # Handles file uploads
+│   └── page.tsx         # The main Single Page Application (SPA)
+├── components/          # UI Building Blocks
+│   ├── SQLEditor.tsx    # The code editor (Monaco)
+│   ├── ResultTable.tsx  # The data grid
+│   └── ChatSidebar.tsx  # The AI interface
+└── hooks/               # Logic
+    └── useSqlExecutor.ts # Central hook for running queries
 ```
 
-## 4. Core Features & Components
+### 3. Key Technical Decisions
+*   **No Server-Side Session:** We do NOT store database passwords on the server. They are stored in the user's browser (`localStorage`) and sent with every request. This ensures privacy and statelessness.
+*   **Streaming AI:** The AI chat does not stream yet (future improvement), but uses a robust prompt engineering approach to understand database schema.
+*   **Security:** Inputs are sanitized to prevent basic injection, but the tool is intended for authenticated users who *own* the database.
 
-### SQL Editor (`SQLEditor.tsx`)
-- Provides a code editor interface with syntax highlighting.
-- Supports running selected code or the full script.
-- "Explain" feature uses AI to explain complex queries.
+### 4. Setup for Local Development
+1.  **Clone:** `git clone https://github.com/MarshallxMG/SQL-Deployment.git`
+2.  **Install:** `npm install`
+3.  **Env:** Create `.env.local` with `GEMINI_API_KEY=...`
+4.  **Run:** `npm run dev`
 
-### AI Chat (`ChatSidebar.tsx`)
-- Integrated with Google Gemini.
-- Context-aware: Knows the current database schema.
-- Users can ask natural language questions (e.g., "Show me top 5 users") and get SQL code.
+---
 
-### Visual Query Builder (`VisualQueryBuilder.tsx`)
-- No-code interface for building queries.
-- Users select tables, columns, and filters visually.
-- Generates valid SQL automatically.
+## ❓ FAQ
 
-### Data Visualization (`DataVisualizer.tsx`)
-- Automatically detects data types in query results.
-- Suggests appropriate charts (Bar, Line, Pie, Scatter).
-- Interactive charts using `recharts`.
+**Q: Is my data safe?**
+A: Yes. Your database credentials are saved in your browser, not on our servers. The app talks directly to your database.
 
-## 5. API Reference
+**Q: Can I use this on my phone?**
+A: Yes! The UI is responsive, but it works best on a tablet or desktop for complex queries.
 
-### `POST /api/connect`
-- **Purpose**: Test a database connection.
-- **Body**: `{ host, user, password, port, database }`
-- **Returns**: `{ success: true, message: "Connected" }` or error details.
+**Q: Why do I get "Access Denied"?**
+A: You might be trying to access a database your user doesn't have permission for. Check your username and database name.
 
-### `POST /api/query`
-- **Purpose**: Execute SQL queries.
-- **Body**: `{ connection, query }`
-- **Returns**: `{ results, fields, executionTime }`
-- **Notes**: Supports multiple statements.
-
-### `POST /api/ai`
-- **Purpose**: Generate SQL or explain queries using AI.
-- **Body**: `{ prompt, schema, type }` (type: 'generate' or 'explain')
-- **Returns**: `{ sql, explanation }`
-
-### `POST /api/import`
-- **Purpose**: Import a `.sql` file into the database.
-- **Body**: `{ connection, sqlContent }`
-- **Returns**: `{ success, statementCount }`
-
-### `POST /api/schema`
-- **Purpose**: Fetch database tables and columns for the sidebar.
-- **Body**: `{ connection }`
-- **Returns**: `{ tables: { [tableName]: [columns] } }`
-
-## 6. Environment Variables
-| Variable | Description | Required? |
-| :--- | :--- | :--- |
-| `GEMINI_API_KEY` | Google AI Studio API Key | **Yes** |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Cloudinary Cloud Name | No (for future media) |
-| `NEXT_PUBLIC_CLOUDINARY_API_KEY` | Cloudinary API Key | No |
-| `CLOUDINARY_API_SECRET` | Cloudinary API Secret | No |
-
-## 7. Troubleshooting
-
-### `ENOTFOUND` Error
-- **Cause**: Incorrect Hostname or trailing slash.
-- **Fix**: Ensure Host is correct (e.g., `gateway01...tidbcloud.com`) and has no `http://` or `/` at the end.
-
-### `Access Denied` Error
-- **Cause**: Wrong Username/Password or missing permissions.
-- **Fix**: Check credentials. For TiDB Serverless, ensure username includes the prefix (e.g., `ABuAHqwviSXGzDa.root`).
-
-### `ECONNREFUSED 127.0.0.1`
-- **Cause**: Trying to use `localhost` on a deployed Vercel app.
-- **Fix**: Use a cloud database (TiDB, AWS) instead of localhost.
+**Q: Is it free?**
+A: The app itself is free and open source. You may pay for your own database hosting (e.g., AWS, TiDB) depending on their pricing.
