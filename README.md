@@ -1,5 +1,7 @@
 # SQL Editor Web App
 
+![SQL Editor Hero Banner](public/assets/hero_banner.png)
+
 A modern, serverless SQL Editor built with Next.js, Tailwind CSS, and Gemini AI.
 
 ## 🎮 Try it Live
