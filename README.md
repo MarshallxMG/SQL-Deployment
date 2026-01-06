@@ -29,7 +29,7 @@ You have **FULL ACCESS** to this database (Create, Read, Update, Delete).
 - 💅 **Modern UI**: Beautiful dark mode with Tailwind CSS.
 - 🤖 **AI-Powered**: Ask questions in plain English to generate SQL.
 - 📊 **Data Visualization**: Automatically graph your query results.
-- 🔌 **Universal Connection**: Connect to your own TiDB, MySQL, or AWS database.
+- 🔌 **Universal Connection**: Connect to your own TiDB, MySQL.
 
 📖 **[Read Full Documentation](PROJECT_DOCS.md)**
 
