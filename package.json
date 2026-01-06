@@ -24,7 +24,7 @@
     "react-markdown": "^10.1.0",
     "reactflow": "^11.11.4",
     "recharts": "^3.4.1",
-    "sql-formatter": "^15.6.10",
+    "sql-formatter": "^15.6.12",
     "tailwind-merge": "^3.4.0",
     "xlsx": "^0.18.5"
   },
