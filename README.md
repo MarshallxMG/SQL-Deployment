@@ -1,7 +1,7 @@
 # SQL Editor Web App
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=36BCF7&background=00000000&center=true&vCenter=true&width=500&lines=Modern+Serverless+SQL+Editor;Connect+to+TiDB,AWS;AI-Powered+Query+Generation;Visual+Data+Exploration;Built+with+Next.js+%2B+Tailwind" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=36BCF7&background=00000000&center=true&vCenter=true&width=500&lines=Modern+Serverless+SQL+Editor;Connect+to+TiDB;AI-Powered+Query+Generation;Visual+Data+Exploration;Built+with+Next.js+%2B+Tailwind" alt="Typing SVG" />
 </p>
 
 A modern, serverless SQL Editor built with Next.js, Tailwind CSS, and Gemini AI.
